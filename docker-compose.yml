@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+  realtime-postgres:
+    image: postgres:14.5-alpine3.16
+    container_name: realtime-postgres
+    command: postgres -c stats_temp_directory=/tmp
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGDATABASE}
+    ports:
+      - ${POSTGRES_PORT}:5432
